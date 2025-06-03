@@ -64,8 +64,8 @@ export class AccountabilityListComponent implements OnInit {
           startDate: this.selectedYear + '-02-01',
           endDate:
             this.selectedYear % 4 === 0
-              ? this.selectedYear + '-01-29'
-              : this.selectedYear + '-01-28',
+              ? this.selectedYear + '-02-29'
+              : this.selectedYear + '-02-28',
         },
         {
           name: 'March',

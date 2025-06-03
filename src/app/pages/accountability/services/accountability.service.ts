@@ -29,16 +29,16 @@ export class AccountabilityService {
             ...userGroupResponse?.users.map((user: any) =>
               zip(
                 this.httpClientService.get(
-                  `messageConversations?fields=id,name,subjec,messageType,messageCount,createdBy&queryString=${user?.username}` +
+                  `messageConversations?fields=id,name,subject,messageType,messageCount,createdBy&queryString=${user?.username}` +
                     `&filter=created:lt:${endDate}&filter=created:gt:${startDate}&filter=subject:ilike:ACCOUNT REQUEST`
                 ),
                 zip(
                   this.httpClientService.get(
-                    `messageConversations?fields=id,name,subjec,messageType,messageCount,createdBy&queryString=${user?.username}` +
+                    `messageConversations?fields=id,name,subject,messageType,messageCount,createdBy&queryString=${user?.username}` +
                       `&filter=created:lt:${endDate}&filter=created:gt:${startDate}&filter=subject:ilike:FORM REQUEST`
                   ),
                   this.httpClientService.get(
-                    `messageConversations?fields=id,name,subjec,messageType,messageCount,createdBy&queryString=${user?.username}` +
+                    `messageConversations?fields=id,name,subject,messageType,messageCount,createdBy&queryString=${user?.username}` +
                       `&filter=created:lt:${endDate}&filter=created:gt:${startDate}&filter=subject:ilike:MAOMBI YA FOMU`
                   )
                 ).pipe(
