@@ -21,24 +21,26 @@ export class AccountabilityService {
       )
       .pipe(
         switchMap((userGroupResponse: any) => {
+          console.log(userGroupResponse)
           const startDate = moment(selectedPeriod?.startDate).format(
             'YYYY-MM-DD'
           );
           const endDate = moment(selectedPeriod?.endDate).format('YYYY-MM-DD');
           return zip(
             ...userGroupResponse?.users.map((user: any) =>
+
               zip(
                 this.httpClientService.get(
-                  `messageConversations?fields=id,name,subject,messageType,messageCount,createdBy&queryString=${user?.username}` +
+                  `messageConversations?fields=id,name,subject,messageType,messageCount,createdBy,userSurname,userFirstname,lastSenderSurname,lastSenderFirstname&filter=messages.sender.id:eq:${user?.id}` +
                     `&filter=created:lt:${endDate}&filter=created:gt:${startDate}&filter=subject:ilike:ACCOUNT REQUEST`
                 ),
                 zip(
                   this.httpClientService.get(
-                    `messageConversations?fields=id,name,subject,messageType,messageCount,createdBy&queryString=${user?.username}` +
+                    `messageConversations?fields=id,name,subject,messageType,messageCount,createdBy,userSurname,userFirstname,lastSenderSurname,lastSenderFirstname&filter=messages.sender.id:eq:${user?.id}` +
                       `&filter=created:lt:${endDate}&filter=created:gt:${startDate}&filter=subject:ilike:FORM REQUEST`
                   ),
                   this.httpClientService.get(
-                    `messageConversations?fields=id,name,subject,messageType,messageCount,createdBy&queryString=${user?.username}` +
+                    `messageConversations?fields=id,name,subject,messageType,messageCount,createdBy,userSurname,userFirstname,lastSenderSurname,lastSenderFirstname&filter=messages.sender.id:eq:${user?.id}` +
                       `&filter=created:lt:${endDate}&filter=created:gt:${startDate}&filter=subject:ilike:MAOMBI YA FOMU`
                   )
                 ).pipe(

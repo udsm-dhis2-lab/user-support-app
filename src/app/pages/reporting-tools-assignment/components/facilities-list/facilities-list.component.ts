@@ -95,12 +95,13 @@ export class FacilitiesListComponent implements OnInit {
     localStorage.setItem('currentFacilityListPage', '1');
     this.reportingToolsResponse$ =
       this.reportingToolsService.getFacilitiesWithNumberOfDataSets(
-        this.currentUser?.organisationUnits[0]?.id,
+        this.currentUser?.organisationUnits,
         this.lowestLevel,
         Number(currentPage),
         this.pageCount,
         null,
-        this.userSupportKeys
+        this.userSupportKeys,
+        true
       );
   }
 

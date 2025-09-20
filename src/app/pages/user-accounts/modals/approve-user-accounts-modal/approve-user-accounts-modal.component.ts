@@ -255,7 +255,7 @@ export class ApproveUserAccountsModalComponent implements OnInit {
             request?.payload?.filter((user) => user?.status !== 'CREATED' || user?.status !== 'REJECTED') || []
           )?.length;
 
-          
+
 
           this.messageAndDataStoreService
             .searchMessageConversationByTicketNumber(
@@ -297,6 +297,7 @@ export class ApproveUserAccountsModalComponent implements OnInit {
                       request?.payload?.filter((user) => user?.username) || []
                     )
                       ?.map((userPayload, index) => {
+                        console.log('userPayload', userPayload);
                         usersCount = usersCount + 1;
                         return (
                           usersCount +
@@ -307,7 +308,7 @@ export class ApproveUserAccountsModalComponent implements OnInit {
                           ' - ' +
                           userPayload?.phoneNumber +
                           (userPayload?.username && userPayload?.password
-                            ? ' is ' +
+                            ? ', user name is ' +
                               userPayload?.username +
                               ' and password is ' +
                               userPayload?.password
@@ -431,6 +432,8 @@ export class ApproveUserAccountsModalComponent implements OnInit {
                                 ) || []
                               )
                                 ?.map((userPayload, index) => {
+                                  console.log('userPayload', userPayload);
+
                                   usersCount = usersCount + 1;
                                   return (
                                     usersCount +
@@ -440,7 +443,7 @@ export class ApproveUserAccountsModalComponent implements OnInit {
                                     userPayload?.surname +
                                     ' - ' +
                                     userPayload?.phoneNumber +
-                                    ' is ' +
+                                    ', user name is ' +
                                     userPayload?.username +
                                     ' and password is ' +
                                     userPayload?.password
@@ -528,6 +531,7 @@ export class ApproveUserAccountsModalComponent implements OnInit {
                       ) || []
                     )
                       ?.map((userPayload, index) => {
+                        console.log('userPayload', userPayload);
                         return (
                           index +
                           1 +
@@ -538,7 +542,7 @@ export class ApproveUserAccountsModalComponent implements OnInit {
                           ' - ' +
                           userPayload?.phoneNumber +
                           (userPayload?.username && userPayload?.password
-                            ? ' is ' +
+                            ? ', user name is ' +
                               userPayload?.username +
                               ' and password is ' +
                               userPayload?.password
@@ -578,6 +582,7 @@ export class ApproveUserAccountsModalComponent implements OnInit {
                               ) || []
                             )
                               ?.map((userPayload, index) => {
+                                console.log('userPayload', userPayload);
                                 usersCount = usersCount + 1;
                                 return (
                                   usersCount +
@@ -587,7 +592,7 @@ export class ApproveUserAccountsModalComponent implements OnInit {
                                   userPayload?.surname +
                                   ' - ' +
                                   userPayload?.phoneNumber +
-                                  ' is ' +
+                                  ', user name is ' +
                                   userPayload?.username +
                                   ' and password is ' +
                                   userPayload?.password
@@ -662,10 +667,10 @@ export class ApproveUserAccountsModalComponent implements OnInit {
                       request?.payload?.filter((user) => user?.username) || []
                     )
                       ?.map((userPayload, index) => {
+                        console.log('userPayload', userPayload);
                         usersCount = usersCount + 1;
                         return (
-                          usersCount +
-                          '. ' +
+                          usersCount + '. ' +
                           userPayload?.firstName +
                           ' ' +
                           userPayload?.surname +
@@ -673,7 +678,7 @@ export class ApproveUserAccountsModalComponent implements OnInit {
                           userPayload?.phoneNumber +
                           ' and Email address ' +
                           userPayload?.email +
-                          ' is ' +
+                          ', user name is ' +
                           userPayload?.username +
                           ' and password is ' +
                           userPayload?.password

@@ -9,6 +9,7 @@ import {
 } from 'src/app/shared/models/reporting-tools.models';
 
 import { flatten, keyBy } from 'lodash';
+import { each } from 'highcharts';
 @Injectable({
   providedIn: 'root',
 })
@@ -16,13 +17,77 @@ export class ReportingToolsService {
   constructor(private httpClient: NgxDhis2HttpClientService) {}
 
   getFacilitiesWithNumberOfDataSets(
-    ouId: string,
+    ouId: any,
     level: number,
     page?: number,
     pageCount?: number,
     searchingText?: string,
-    userSupportKeys?: string[]
+    userSupportKeys?: string[],
+    multipleOrgUnits: boolean = false
   ): Observable<ReportingToolsResponseModel> {
+    if (multipleOrgUnits && Array.isArray(ouId)) {
+      return zip(
+        ...ouId.map((orgUnit: any) => {
+          return this.httpClient
+            .get(
+              `organisationUnits.json?${page ? 'page=' + page + '&' : ''}${
+                pageCount ? 'pageSize=' + pageCount + '&' : ''
+              }filter=level:eq:${level}&fields=id,name,dataSets~size,programs~size,closedDate,parent[id,name,level,parent[id,name,level]]${
+                searchingText ? '&filter=name:ilike:' + searchingText : ''
+              }&filter=path:ilike:${orgUnit?.id}`
+            )
+            .pipe(
+              map((response) => {
+                return response?.organisationUnits;
+              }),
+              catchError((error) => of(error))
+            );
+        })
+      ).pipe(
+        map((responses) => {
+          const allOrgUnits = flatten(responses);
+          return {
+            organisationUnits: allOrgUnits,
+            data: allOrgUnits
+              .filter((ou) => !ou?.closedDate)
+              .map((orgUnit) => {
+                const matchedKeys =
+                  userSupportKeys.filter(
+                    (key) => key?.indexOf(orgUnit?.id) > -1
+                  ) || [];
+                return {
+                  ...orgUnit,
+                  hasPendingRequest: matchedKeys?.length > 0,
+                  keys: matchedKeys,
+                  timeSinceResponseSent:
+                    matchedKeys.length > 0
+                      ? moment(
+                          Number(matchedKeys[0].split('_')[0].replace('DS', ''))
+                        ).fromNow()
+                      : '',
+                  date:
+                    matchedKeys.length > 0
+                      ? Date.now() -
+                        Number(matchedKeys[0].split('_')[0].replace('DS', ''))
+                      : null,
+                };
+              }),
+            pagination: {
+              page: 1,
+              pageCount: allOrgUnits.length,
+              total: allOrgUnits.length,
+              pageSize: allOrgUnits.length,
+              nextPage: null,
+              itemPerPageOptions: [10, 20, 30, 50],
+            },
+          };
+        }),
+        catchError((error) => of(error))
+      );
+    }
+
+    ouId = Array.isArray(ouId) ? ouId[0]?.id : ouId;
+
     return this.httpClient
       .get(
         `organisationUnits.json?${page ? 'page=' + page + '&' : ''}${

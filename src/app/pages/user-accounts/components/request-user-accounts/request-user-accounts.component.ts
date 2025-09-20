@@ -93,32 +93,6 @@ export class RequestUserAccountsComponent implements OnInit {
     this.translations$ = this.store.select(getCurrentTranslations);
     this.configurations$ = this.dataStoreService.getUserSupportConfigurations();
 
-    // const storedUsersData = localStorage.getItem('usersToCreate');
-    // if (storedUsersData) {
-    //   this.formDataToStoreLocally = JSON.parse(storedUsersData);
-    //   this.selectedOrgUnitItemsForDataEntry =
-    //     this.formDataToStoreLocally[
-    //       this.formDataToStoreLocally?.length - 1
-    //     ]?.entryOrgUnits;
-    //   this.selectedOrgUnitItemsForReport =
-    //     this.formDataToStoreLocally[
-    //       this.formDataToStoreLocally?.length - 1
-    //     ]?.reportOrgUnits;
-    //   this.currentUserToCreateSelected =
-    //     this.formDataToStoreLocally[
-    //       this.formDataToStoreLocally?.length - 1
-    //     ]?.id;
-    //   this.selectedRoles =
-    //     this.formDataToStoreLocally[
-    //       this.formDataToStoreLocally?.length - 1
-    //     ]?.userRoles;
-
-    //   this.selectedUserGroups =
-    //     this.formDataToStoreLocally[
-    //       this.formDataToStoreLocally?.length - 1
-    //     ]?.userGroups;
-    // }
-
     this.createDemographicFields(
       this.formDataToStoreLocally?.length > 0
         ? this.formDataToStoreLocally[this.formDataToStoreLocally?.length - 1]
