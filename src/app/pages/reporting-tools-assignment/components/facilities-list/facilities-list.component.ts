@@ -76,12 +76,13 @@ export class FacilitiesListComponent implements OnInit {
     this.searchingText = event.target.value;
     this.reportingToolsResponse$ =
       this.reportingToolsService.getFacilitiesWithNumberOfDataSets(
-        this.currentUser?.organisationUnits[0]?.id,
+        this.currentUser?.organisationUnits,
         this.lowestLevel,
         1,
         this.pageCount,
         this.searchingText,
-        this.userSupportKeys
+        this.userSupportKeys,
+        true
       );
   }
 
