@@ -3,7 +3,7 @@
 >
   <!-- {{ params?.responsibilityPayload }} -->
 
-  <mat-form-field class="w-25" appearance="outline">
+  <mat-form-field class="w-25" appearance="outline" *ngIf="selectedPeriodType !== 'Yearly'">
     <mat-label>Year</mat-label>
     <mat-select (selectionChange)="onYearChange($event)">
       <mat-option [value]="year" *ngFor="let year of years">{{
@@ -16,6 +16,7 @@
     <mat-select (selectionChange)="onPeriodTypeChange($event)">
       <mat-option value="Monthly">Monthly</mat-option>
       <mat-option value="Quarterly">Quarterly</mat-option>
+      <mat-option value="Yearly">Yearly</mat-option>
     </mat-select>
   </mat-form-field>
   <mat-form-field

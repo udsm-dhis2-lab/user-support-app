@@ -118,7 +118,7 @@ export class AccountabilityListComponent implements OnInit {
           endDate: this.selectedYear + '-12-31',
         },
       ];
-    } else {
+    } else if (this.selectedPeriodType == 'Quarterly') {
       this.periods = [
         {
           name: 'Jan-March',
@@ -141,6 +141,16 @@ export class AccountabilityListComponent implements OnInit {
           endDate: this.selectedYear + '-12-31',
         },
       ];
+    } else if (this.selectedPeriodType == 'Yearly') {
+      const currentYear = new Date().getFullYear();
+      this.periods = [];
+      for (let year = 2013; year <= currentYear; year++) {
+        this.periods.push({
+          name: year.toString(),
+          startDate: year + '-01-01',
+          endDate: year + '-12-31',
+        });
+      }
     }
   }
 
